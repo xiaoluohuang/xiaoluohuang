@@ -545,8 +545,16 @@ class KyberSignalClassifier:
         m1_indices = self.y_test == 1
         
         llr = nll_results['log_likelihood_ratio']
-        plt.hist(llr[m0_indices], bins=30, alpha=0.6, label='M0 (Known)', color='blue', edgecolor='black')
-        plt.hist(llr[m1_indices], bins=30, alpha=0.6, label='M1 (Random)', color='red', edgecolor='black')
+        # Filter out infinite values for plotting
+        llr_m0 = llr[m0_indices]
+        llr_m1 = llr[m1_indices]
+        llr_m0_finite = llr_m0[np.isfinite(llr_m0)]
+        llr_m1_finite = llr_m1[np.isfinite(llr_m1)]
+        
+        if len(llr_m0_finite) > 0:
+            plt.hist(llr_m0_finite, bins=30, alpha=0.6, label='M0 (Known)', color='blue', edgecolor='black')
+        if len(llr_m1_finite) > 0:
+            plt.hist(llr_m1_finite, bins=30, alpha=0.6, label='M1 (Random)', color='red', edgecolor='black')
         plt.axvline(x=0, color='black', linestyle='--', linewidth=2, label='Decision Boundary')
         plt.xlabel('Log-Likelihood Ratio', fontsize=11)
         plt.ylabel('Frequency', fontsize=11)
@@ -563,9 +571,11 @@ class KyberSignalClassifier:
         fig, axes = plt.subplots(1, 2, figsize=(15, 5))
         
         # Prediction probabilities distribution
-        axes[0].hist(eval_results['y_pred_proba'][m0_indices], bins=30, alpha=0.6, 
+        proba_m0 = eval_results['y_pred_proba'][m0_indices].flatten()
+        proba_m1 = eval_results['y_pred_proba'][m1_indices].flatten()
+        axes[0].hist(proba_m0, bins=30, alpha=0.6, 
                     label='M0 (Known)', color='blue', edgecolor='black')
-        axes[0].hist(eval_results['y_pred_proba'][m1_indices], bins=30, alpha=0.6,
+        axes[0].hist(proba_m1, bins=30, alpha=0.6,
                     label='M1 (Random)', color='red', edgecolor='black')
         axes[0].axvline(x=0.5, color='black', linestyle='--', linewidth=2, 
                        label='Decision Threshold')
@@ -575,11 +585,18 @@ class KyberSignalClassifier:
         axes[0].legend(fontsize=10)
         axes[0].grid(True, alpha=0.3)
         
-        # NLL values distribution
-        axes[1].hist(nll_results['nll_m0'][m0_indices], bins=30, alpha=0.6,
-                    label='M0 NLL', color='blue', edgecolor='black')
-        axes[1].hist(nll_results['nll_m1'][m1_indices], bins=30, alpha=0.6,
-                    label='M1 NLL', color='red', edgecolor='black')
+        # NLL values distribution - filter out infinite values
+        nll_m0_vals = nll_results['nll_m0'][m0_indices]
+        nll_m1_vals = nll_results['nll_m1'][m1_indices]
+        nll_m0_finite = nll_m0_vals[np.isfinite(nll_m0_vals)]
+        nll_m1_finite = nll_m1_vals[np.isfinite(nll_m1_vals)]
+        
+        if len(nll_m0_finite) > 0:
+            axes[1].hist(nll_m0_finite, bins=30, alpha=0.6,
+                        label='M0 NLL', color='blue', edgecolor='black')
+        if len(nll_m1_finite) > 0:
+            axes[1].hist(nll_m1_finite, bins=30, alpha=0.6,
+                        label='M1 NLL', color='red', edgecolor='black')
         axes[1].set_xlabel('Negative Log-Likelihood', fontsize=11)
         axes[1].set_ylabel('Frequency', fontsize=11)
         axes[1].set_title('NLL Distribution by True Class', fontsize=12, fontweight='bold')
