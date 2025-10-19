@@ -1,0 +1,15 @@
+======================================================================
+PERFORMANCE BENCHMARK RESULTS
+======================================================================
+
+Prediction Speed:
+  SVM single prediction: 0.2212 ms
+  RF single prediction: 11.9781 ms
+
+Batch Processing (80 samples):
+  SVM batch time: 0.0105 s
+  RF batch time: 0.0119 s
+
+Throughput:
+  SVM: 7594.94 samples/sec
+  RF: 6715.45 samples/sec

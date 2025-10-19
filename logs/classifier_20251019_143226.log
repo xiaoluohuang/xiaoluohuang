@@ -1,0 +1,153 @@
+2025-10-19 14:32:26,024 - INFO - Kyber SVM Classifier initialized
+2025-10-19 14:32:26,024 - INFO - Loading datasets...
+2025-10-19 14:32:26,041 - INFO - M0 dataset shape: (1000, 201)
+2025-10-19 14:32:26,055 - INFO - M1 dataset shape: (1000, 201)
+2025-10-19 14:32:26,055 - INFO - M0 traces shape after transpose: (201, 1000)
+2025-10-19 14:32:26,055 - INFO - M1 traces shape after transpose: (201, 1000)
+2025-10-19 14:32:26,055 - INFO - M0 traces shape after skipping header: (200, 1000)
+2025-10-19 14:32:26,055 - INFO - M1 traces shape after skipping header: (200, 1000)
+2025-10-19 14:32:26,058 - INFO - 
+Final dataset shapes:
+2025-10-19 14:32:26,058 - INFO - Training set: (320, 1000), Labels: (320,)
+2025-10-19 14:32:26,058 - INFO - Test set: (80, 1000), Labels: (80,)
+2025-10-19 14:32:26,058 - INFO - Training label distribution: M0=160, M1=160
+2025-10-19 14:32:26,058 - INFO - Test label distribution: M0=40, M1=40
+2025-10-19 14:32:26,058 - INFO - 
+Applying StandardScaler normalization...
+2025-10-19 14:32:26,064 - INFO - Data preprocessing completed successfully
+2025-10-19 14:32:26,064 - INFO - 
+======================================================================
+2025-10-19 14:32:26,064 - INFO - TRAINING SVM CLASSIFIER (PRIMARY MODEL)
+2025-10-19 14:32:26,064 - INFO - ======================================================================
+2025-10-19 14:32:26,064 - INFO - Training SVM with RBF kernel...
+2025-10-19 14:32:26,220 - INFO - Training accuracy: 0.9875 (98.75%)
+2025-10-19 14:32:26,230 - INFO - Test accuracy: 0.9500 (95.00%)
+2025-10-19 14:32:26,230 - INFO - SVM training completed successfully
+2025-10-19 14:32:26,230 - INFO - 
+======================================================================
+2025-10-19 14:32:26,230 - INFO - TRAINING RANDOM FOREST CLASSIFIER (BACKUP MODEL)
+2025-10-19 14:32:26,230 - INFO - ======================================================================
+2025-10-19 14:32:26,230 - INFO - Training Random Forest with 100 estimators...
+2025-10-19 14:32:26,402 - INFO - Training accuracy: 1.0000 (100.00%)
+2025-10-19 14:32:26,415 - INFO - Test accuracy: 0.9125 (91.25%)
+2025-10-19 14:32:26,415 - INFO - Random Forest training completed successfully
+2025-10-19 14:32:26,415 - INFO - 
+======================================================================
+2025-10-19 14:32:26,415 - INFO - CROSS-VALIDATION EVALUATION
+2025-10-19 14:32:26,415 - INFO - ======================================================================
+2025-10-19 14:32:26,415 - INFO - 
+Performing 5-fold cross-validation for SVM...
+2025-10-19 14:32:28,152 - INFO - SVM CV scores: [0.765625 0.953125 0.84375  0.703125 0.875   ]
+2025-10-19 14:32:28,152 - INFO - SVM CV mean: 0.8281 (+/- 0.1734)
+2025-10-19 14:32:28,152 - INFO - 
+Performing 5-fold cross-validation for Random Forest...
+2025-10-19 14:32:28,822 - INFO - RF CV scores: [1.       0.96875  0.953125 0.96875  1.      ]
+2025-10-19 14:32:28,822 - INFO - RF CV mean: 0.9781 (+/- 0.0375)
+2025-10-19 14:32:28,822 - INFO - Cross-validation completed successfully
+2025-10-19 14:32:28,822 - INFO - 
+======================================================================
+2025-10-19 14:32:28,822 - INFO - SVM MODEL EVALUATION
+2025-10-19 14:32:28,822 - INFO - ======================================================================
+2025-10-19 14:32:28,841 - INFO - 
+Test Accuracy: 0.9500 (95.00%)
+2025-10-19 14:32:28,842 - INFO - 
+Confusion Matrix:
+2025-10-19 14:32:28,842 - INFO - 
+[[40  0]
+ [ 4 36]]
+2025-10-19 14:32:28,842 - INFO - 
+Classification Report:
+2025-10-19 14:32:28,848 - INFO - 
+              precision    recall  f1-score   support
+
+  M0 (Known)     0.9091    1.0000    0.9524        40
+ M1 (Random)     1.0000    0.9000    0.9474        40
+
+    accuracy                         0.9500        80
+   macro avg     0.9545    0.9500    0.9499        80
+weighted avg     0.9545    0.9500    0.9499        80
+
+2025-10-19 14:32:28,848 - INFO - 
+ROC AUC Score: 0.9856
+2025-10-19 14:32:28,848 - INFO - 
+======================================================================
+2025-10-19 14:32:28,848 - INFO - RANDOM FOREST MODEL EVALUATION
+2025-10-19 14:32:28,848 - INFO - ======================================================================
+2025-10-19 14:32:28,873 - INFO - 
+Test Accuracy: 0.9125 (91.25%)
+2025-10-19 14:32:28,874 - INFO - 
+Confusion Matrix:
+2025-10-19 14:32:28,874 - INFO - 
+[[38  2]
+ [ 5 35]]
+2025-10-19 14:32:28,874 - INFO - 
+Classification Report:
+2025-10-19 14:32:28,881 - INFO - 
+              precision    recall  f1-score   support
+
+  M0 (Known)     0.8837    0.9500    0.9157        40
+ M1 (Random)     0.9459    0.8750    0.9091        40
+
+    accuracy                         0.9125        80
+   macro avg     0.9148    0.9125    0.9124        80
+weighted avg     0.9148    0.9125    0.9124        80
+
+2025-10-19 14:32:28,881 - INFO - 
+ROC AUC Score: 0.9772
+2025-10-19 14:32:28,904 - INFO - 
+Top 20 Most Important Features:
+2025-10-19 14:32:28,904 - INFO -   Feature 692: 0.041536
+2025-10-19 14:32:28,904 - INFO -   Feature 787: 0.022843
+2025-10-19 14:32:28,904 - INFO -   Feature 40: 0.021090
+2025-10-19 14:32:28,904 - INFO -   Feature 510: 0.020078
+2025-10-19 14:32:28,904 - INFO -   Feature 98: 0.018220
+2025-10-19 14:32:28,904 - INFO -   Feature 21: 0.013863
+2025-10-19 14:32:28,904 - INFO -   Feature 254: 0.012673
+2025-10-19 14:32:28,904 - INFO -   Feature 798: 0.011800
+2025-10-19 14:32:28,904 - INFO -   Feature 20: 0.011132
+2025-10-19 14:32:28,904 - INFO -   Feature 357: 0.010871
+2025-10-19 14:32:28,904 - INFO -   Feature 987: 0.009583
+2025-10-19 14:32:28,904 - INFO -   Feature 179: 0.009583
+2025-10-19 14:32:28,904 - INFO -   Feature 120: 0.009549
+2025-10-19 14:32:28,904 - INFO -   Feature 509: 0.009537
+2025-10-19 14:32:28,904 - INFO -   Feature 924: 0.009511
+2025-10-19 14:32:28,904 - INFO -   Feature 711: 0.009267
+2025-10-19 14:32:28,904 - INFO -   Feature 827: 0.009133
+2025-10-19 14:32:28,904 - INFO -   Feature 340: 0.009044
+2025-10-19 14:32:28,904 - INFO -   Feature 339: 0.008635
+2025-10-19 14:32:28,905 - INFO -   Feature 866: 0.008507
+2025-10-19 14:32:28,905 - INFO - 
+======================================================================
+2025-10-19 14:32:28,905 - INFO - PERFORMANCE BENCHMARKING
+2025-10-19 14:32:28,905 - INFO - ======================================================================
+2025-10-19 14:32:30,147 - INFO - 
+Prediction Speed:
+2025-10-19 14:32:30,147 - INFO -   SVM single prediction: 0.2212 ms
+2025-10-19 14:32:30,147 - INFO -   RF single prediction: 11.9781 ms
+2025-10-19 14:32:30,147 - INFO - 
+Batch Processing (80 samples):
+2025-10-19 14:32:30,147 - INFO -   SVM batch time: 0.0105 s
+2025-10-19 14:32:30,147 - INFO -   RF batch time: 0.0119 s
+2025-10-19 14:32:30,147 - INFO - 
+Throughput:
+2025-10-19 14:32:30,147 - INFO -   SVM: 7594.94 samples/sec
+2025-10-19 14:32:30,147 - INFO -   RF: 6715.45 samples/sec
+2025-10-19 14:32:30,148 - INFO - 
+Generating visualizations in 'svm_output/visualizations' directory...
+2025-10-19 14:32:30,703 - INFO - ✓ Model comparison plot saved
+2025-10-19 14:32:31,260 - INFO - ✓ Confusion matrices plot saved
+2025-10-19 14:32:31,688 - INFO - ✓ ROC curves plot saved
+2025-10-19 14:32:32,332 - INFO - ✓ Feature importance plot saved
+2025-10-19 14:32:32,894 - INFO - ✓ Cross-validation scores plot saved
+2025-10-19 14:32:34,107 - INFO - ✓ Prediction confidence plot saved
+2025-10-19 14:32:35,550 - INFO - ✓ Signal analysis plot saved
+2025-10-19 14:32:35,550 - INFO - All visualizations generated successfully
+2025-10-19 14:32:35,615 - INFO - 
+Generating PDF report: svm_output/classifier_report.pdf
+2025-10-19 14:32:39,895 - INFO - PDF report generated successfully: svm_output/classifier_report.pdf
+2025-10-19 14:32:39,900 - INFO - SVM model saved to: svm_output/models/svm_model.joblib
+2025-10-19 14:32:39,923 - INFO - Random Forest model saved to: svm_output/models/rf_model.joblib
+2025-10-19 14:32:39,924 - INFO - Scaler saved to: svm_output/models/scaler.joblib
+2025-10-19 14:32:39,924 - INFO - 
+All models saved successfully
+2025-10-19 14:32:39,926 - INFO - Predictions exported to: svm_output/predictions.csv
